@@ -27,6 +27,7 @@ export default function AdminDashboard() {
     school_id: "",
     password: "",
     confirm_password: "",
+    role: "client",
   });
 
   const [errors, setErrors] = useState<any>({});
@@ -99,7 +100,7 @@ export default function AdminDashboard() {
       newErrors.school_id = "School ID is required";
     if (!formData.password)
       newErrors.password = "Password is required";
-
+    if (!formData.role) newErrors.role = "Role is required";
     if (formData.password !== formData.confirm_password)
       newErrors.confirm_password = "Passwords do not match";
 
@@ -133,6 +134,7 @@ export default function AdminDashboard() {
           school_id: "",
           password: "",
           confirm_password: "",
+          role: "",
         });
 
         setErrors({});
@@ -165,6 +167,15 @@ export default function AdminDashboard() {
       setServerError("Server error");
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("admin_token");
+    console.log("TOKEN:", token);
+
+    if (!token) {
+      window.location.replace("/admin/login");
+    }
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-chat-gradient p-6">
@@ -325,7 +336,7 @@ export default function AdminDashboard() {
                     setDeleteSuccess(true); // ✅ show success popup
 
                     // wait then close everything
-                    setTimeout(() => {
+                      setTimeout(() => {
                       setDeleteSuccess(false);
                       setSelectedUser(null);
                       fetchUsers();
@@ -370,7 +381,26 @@ export default function AdminDashboard() {
             {serverError && <p className="text-red-500">{serverError}</p>}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              {Object.keys(formData).map((field) => (
+              <div className="flex flex-col">
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                className={`w-full p-3 border rounded outline-none ${
+                  hasSubmitted && errors.role ? "border-red-500" : "border-gray-300"
+                }`}
+              >
+                <option value="client">Client</option>
+                <option value="admin">Admin</option>
+              </select>
+
+              {hasSubmitted && errors.role && (
+                <p className="text-red-500 text-sm mt-1">{errors.role}</p>
+              )}
+            </div>
+              {Object.keys(formData)
+              .filter((field) => field !== "role") // ✅ remove role from loop
+              .map((field) => (
               <div key={field} className="flex flex-col">
 
                 <input
@@ -409,6 +439,7 @@ export default function AdminDashboard() {
                       school_id: "",
                       password: "",
                       confirm_password: "",
+                      role: "client",
                     });
 
                     // ✅ clear errors
@@ -434,7 +465,7 @@ export default function AdminDashboard() {
       <button
         onClick={() => {
           localStorage.removeItem("admin_token");
-          window.location.href = "/admin/login";
+          window.location.replace("/admin/login");
         }}
         className="fixed bottom-6 right-6 bg-red-600 text-white px-5 py-2 rounded-full"
       >

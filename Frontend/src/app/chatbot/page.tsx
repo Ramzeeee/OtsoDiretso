@@ -232,37 +232,37 @@ export default function ChatbotPage() {
 
               {/* Member 3 */}
               <div className="flex flex-col items-center">
-                <img src="/members/member3.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
+                <img src="/members/RamilGrabador.jpg" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
                 <p className="mt-2 text-sm">Ramil Grabador</p>
               </div>
 
               {/* Member 4 */}
               <div className="flex flex-col items-center">
-                <img src="/members/member4.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
+                <img src="/members/JulianneGuiao.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
                 <p className="mt-2 text-sm">Julianne Mikaela Guiao</p>
               </div>
 
               {/* Member 5 */}
               <div className="flex flex-col items-center">
-                <img src="/members/member5.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
+                <img src="/members/AdrianOrdonio.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
                 <p className="mt-2 text-sm">Adrian James Ordonio</p>
               </div>
 
               {/* Member 6 */}
               <div className="flex flex-col items-center">
-                <img src="/members/member6.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
+                <img src="/members/AbigailPalacay.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
                 <p className="mt-2 text-sm">Abigail Palacay</p>
               </div>
 
               {/* Member 7 */}
               <div className="flex flex-col items-center">
-                <img src="/members/member7.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
+                <img src="/members/BryanPascual.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
                 <p className="mt-2 text-sm">Jermaine Bryan Pascual</p>
               </div>
 
               {/* Member 8 */}
               <div className="flex flex-col items-center">
-                <img src="/members/member8.png" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
+                <img src="/members/JMSollorin.jpg" className="w-24 h-24 rounded-full object-cover bg-gray-200" />
                 <p className="mt-2 text-sm">John Michael Sollorin</p>
               </div>
             </div>

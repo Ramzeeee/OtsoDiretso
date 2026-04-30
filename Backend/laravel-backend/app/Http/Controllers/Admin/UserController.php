@@ -38,9 +38,7 @@ class UserController extends Controller
             'email'      => $request->email,
             'school_id'  => $request->school_id,
             'password'   => Hash::make($request->password),
-
-            // IMPORTANT: default role
-            'role'       => 'client',
+            'role' => $request->role,
         ]);
 
         return response()->json([

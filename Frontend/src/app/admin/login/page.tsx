@@ -48,9 +48,9 @@ export default function Home() {
       const data = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("admin_token", data.token);
         setErrors({});
-        router.push("/admin/dashboard");
+        router.replace("/admin/dashboard");
       } else {
         // 🔥 HANDLE BACKEND ERROR TYPES
         if (data.error_type === "email") {
