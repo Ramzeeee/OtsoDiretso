@@ -70,4 +70,26 @@ class UserController extends Controller
             ], 500);
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        // ✅ Validate input
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'email'      => 'required|email|unique:users,email,' . $id,
+            'school_id'  => 'required|string|unique:users,school_id,' . $id,
+            'role'       => 'required|in:admin,client',
+        ]);
+
+        // ✅ Update basic fields
+        $user->update($validated);
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user
+        ], 200);
+    }
 }

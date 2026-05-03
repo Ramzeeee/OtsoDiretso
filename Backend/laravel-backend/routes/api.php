@@ -30,6 +30,7 @@ Route::post('/admin/login', [AuthController::class, 'adminLogin']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
+
 /*
 |--------------------------------------------------------------------------
 | GUEST ROUTES
@@ -53,6 +54,7 @@ Route::get('/hotlines', [HotlineController::class, 'index']);
 */
 Route::post('/admin/users', [AuthController::class, 'createUserByAdmin']);
 Route::delete('/admin/users/{id}', [UserController::class, 'deleteUser']);
+Route::put('/admin/users/{id}', [UserController::class, 'update']);
 Route::get('/admin/users', [UserController::class, 'index']);
 Route::post('/admin/users', [UserController::class, 'store']);
 

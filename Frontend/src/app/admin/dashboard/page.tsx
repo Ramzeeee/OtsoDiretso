@@ -17,8 +17,11 @@ export default function AdminDashboard() {
   const [hasSubmitted, setHasSubmitted] = useState(false);
     
   const [deleteSuccess, setDeleteSuccess] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [pendingDeleteUser, setPendingDeleteUser] = useState<any>(null);
+
+  const [editMode, setEditMode] = useState(false);
+  const [editData, setEditData] = useState<any>(null);
+
+
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -168,6 +171,45 @@ export default function AdminDashboard() {
     }
   };
 
+    const handleEditChange = (e: any) => {
+    const { name, value } = e.target;
+
+    setEditData((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+    const handleEditSubmit = async (e: any) => {
+      e.preventDefault();
+
+      try {
+        const res = await fetch(
+          `http://127.0.0.1:8000/api/admin/users/${editData.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(editData),
+          }
+        );
+
+        const data = await res.json();
+
+        if (res.ok) {
+          setEditMode(false);
+          setSelectedUser(null);
+          fetchUsers();
+        } else {
+          alert(data.message || "Failed to update user");
+        }
+      } catch {
+        alert("Server error");
+      }
+    };
+
   useEffect(() => {
     const token = localStorage.getItem("admin_token");
     console.log("TOKEN:", token);
@@ -305,7 +347,8 @@ export default function AdminDashboard() {
               {/* EDIT BUTTON */}
               <button
                 onClick={() => {
-                  alert("Edit feature coming soon");
+                  setEditData(selectedUser);
+                  setEditMode(true);
                 }}
                 className="flex-1 bg-blue-600 text-white px-4 py-2 rounded"
               >
@@ -456,6 +499,68 @@ export default function AdminDashboard() {
                   Create
                 </button>
               </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* EDIT USER MODAL */}
+      {editMode && editData && (
+        <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
+          <div className="bg-white p-10 rounded-xl w-full max-w-2xl">
+
+            <h2 className="text-2xl mb-6">Edit User</h2>
+
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+
+              <input
+                name="first_name"
+                value={editData.first_name}
+                onChange={handleEditChange}
+                className="w-full p-3 border rounded"
+              />
+
+              <input
+                name="last_name"
+                value={editData.last_name}
+                onChange={handleEditChange}
+                className="w-full p-3 border rounded"
+              />
+
+              <input
+                name="email"
+                value={editData.email}
+                onChange={handleEditChange}
+                className="w-full p-3 border rounded"
+              />
+
+              <input
+                name="school_id"
+                value={editData.school_id}
+                onChange={handleEditChange}
+                className="w-full p-3 border rounded"
+              />
+
+              <select
+                name="role"
+                value={editData.role}
+                onChange={handleEditChange}
+                className="w-full p-3 border rounded"
+              >
+                <option value="client">Client</option>
+                <option value="admin">Admin</option>
+              </select>
+
+              <div className="flex justify-between">
+                <button type="button" onClick={() => setEditMode(false)}>
+                  Cancel
+                </button>
+
+                <button className="bg-blue-600 text-white px-4 py-2 rounded">
+                  Save Changes
+                </button>
+              </div>
+
             </form>
           </div>
         </div>
