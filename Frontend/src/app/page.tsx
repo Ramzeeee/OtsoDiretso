@@ -108,7 +108,15 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans bg-chat-gradient">
+    <div
+      className="flex min-h-screen items-center justify-center font-sans"
+      style={{
+        backgroundImage: "url('/cappyBG.gif')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       
       {/* MAIN CARD */}
       <main className="flex w-full max-w-3xl h-[600px] flex-col bg-white/20 backdrop-blur-md rounded-xl p-10">
