@@ -1,6 +1,14 @@
-from fastapi import FastAPI
+import os
+import httpx
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from dotenv import load_dotenv
 from safety.detector import detect_risk_level, build_safe_prompt
+
+load_dotenv()
+
+LLAMA_API_URL = os.getenv("LLAMA_API_URL")
+LLAMA_API_KEY = os.getenv("LLAMA_API_KEY")
 
 app = FastAPI()
 
@@ -12,42 +20,32 @@ def health():
 
 class Message(BaseModel):
     message: str
+    history: list = []
 
 
 @app.post("/chat")
 def chat(data: Message):
-    """
-    Main chat endpoint.
-
-    Flow:
-    1. Receive message from Laravel
-    2. Run safety detection on the message
-    3. Build an appropriate prompt based on risk level
-    4. (Later) Send prompt to LLaMA 3.1 8B and return response
-    5. For now, return echo response only — risk_level and
-       prepared_prompt are used internally and never exposed
-       to the user
-    """
-
     # Step 1 — Detect risk level internally
-    # This is never sent back to the user
     risk_level = detect_risk_level(data.message)
-
-    # Temporary print for development testing only
-    # Remove this before deployment
     print(f"[SAFETY] Message: '{data.message}' | Risk Level: {risk_level}")
 
-
     # Step 2 — Build safe prompt based on risk level
-    # This will be passed to the LLM once integrated
-    # For now it is prepared but not yet used
     safe_prompt = build_safe_prompt(data.message, risk_level)
 
-    # Step 3 — Return only the reply to Laravel
-    # risk_level and safe_prompt stay internal
-    # Once LLM is integrated, safe_prompt will be sent
-    # to the model and the actual response returned here
-    return {
-        "reply": f"You said: {data.message}",
-        
-    }
+    # Step 3 — Send to Llama API and return reply
+    try:
+        response = httpx.post(
+            LLAMA_API_URL,
+            headers={
+                "Content-Type": "application/json",
+                "X-API-Key": LLAMA_API_KEY,
+            },
+            json={"message": safe_prompt, "history": data.history},
+            timeout=30.0,
+        )
+        response.raise_for_status()
+        reply = response.json().get("reply", "I'm here to listen.")
+    except httpx.HTTPError as e:
+        raise HTTPException(status_code=502, detail=f"Llama API error: {str(e)}")
+
+    return {"reply": reply}
