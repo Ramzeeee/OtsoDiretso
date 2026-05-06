@@ -137,9 +137,15 @@ export default function ChatbotPage() {
                 encouragement for students. It is not a replacement for a licensed therapist,
                 counselor, psychologist, psychiatrist, or any other mental health professional.
                 It does not provide diagnosis, treatment, crisis intervention, or medical advice.
-                If you are in distress, experiencing a mental health emergency, or need professional
-                support, please contact a licensed mental health provider or appropriate emergency
-                services. By clicking “I Agree” or “Continue,” you acknowledge and accept these terms.
+                If you are in distress, experiencing a mental health emergency, or need
+                professional support, please contact a licensed mental health provider or
+                appropriate emergency services. To protect your privacy, please avoid sharing
+                sensitive personal information such as your full name, address, contact details,
+                school identification numbers, or any confidential data. This chatbot is designed
+                for general support, and users are responsible for the information they choose
+                to share. By clicking “I Agree” or “Continue,” you acknowledge and accept these
+                terms, including your responsibility to safeguard your personal information while
+                using this service.
               </p>
 
               <button
