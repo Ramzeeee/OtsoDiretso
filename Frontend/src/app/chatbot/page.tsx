@@ -73,11 +73,15 @@ export default function ChatbotPage() {
         {menuOpen && (
           <div className="p-5 flex flex-col gap-4 h-full">
 
-            <h2 className="text-lg font-bold mb-2">Menu</h2>
+            <img
+              src="/CapyBuddy.png"
+              alt="Avatar"
+              className="w-20 h-19 rounded-full self-center mb-4"
+            />
 
             <button
               onClick={() => setHotlinesOpen(true)}
-              className="text-left hover:underline"
+              className="text-left hover:underline text-black"
             >
               Emergency Hotlines
             </button>
@@ -85,14 +89,14 @@ export default function ChatbotPage() {
             {/* ABOUT US MODAL TRIGGER */}
             <button
               onClick={() => setAboutOpen(true)}
-              className="text-left hover:underline"
+              className="text-left hover:underline text-black"
             >
               About Us
             </button>
 
             <button
               onClick={() => router.push("/history")}
-              className="text-left hover:underline"
+              className="text-left hover:underline text-black"
             >
               Chat History
             </button>
@@ -161,11 +165,16 @@ export default function ChatbotPage() {
         {/* HEADER */}
         <div className="flex flex-col items-center flex-shrink-0 py-4">
           <img
-            src="/tempAvatarIcon.png"
+            src="/capyAvatar.gif"
             className="h-24 w-24 rounded-full mb-2"
           />
+          
+          <h1 className="text-2xl font-bold text-black">
+            CapyBuddy
+          </h1>
+
           <p className="text-sm text-gray-700">
-            How can we help you today?
+            A safe space to talk and be heard.
           </p>
           <hr className="mt-4 w-full border-gray-300" />
         </div>
