@@ -3,6 +3,7 @@ uvicorn[standard]
 pydantic
 python-dotenv
 httpx
+gradio_client
 
 # AI / Machine Learning
 torch

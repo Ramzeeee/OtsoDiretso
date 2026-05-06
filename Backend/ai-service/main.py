@@ -7,8 +7,7 @@ from safety.detector import detect_risk_level, build_safe_prompt
 
 load_dotenv()
 
-LLAMA_API_URL = os.getenv("LLAMA_API_URL")
-LLAMA_API_KEY = os.getenv("LLAMA_API_KEY")
+COLAB_API_URL = os.getenv("COLAB_API_URL")
 
 app = FastAPI()
 
@@ -32,20 +31,17 @@ def chat(data: Message):
     # Step 2 — Build safe prompt based on risk level
     safe_prompt = build_safe_prompt(data.message, risk_level)
 
-    # Step 3 — Send to Llama API and return reply
+    # Step 3 — Send to Colab model and return reply
     try:
         response = httpx.post(
-            LLAMA_API_URL,
-            headers={
-                "Content-Type": "application/json",
-                "X-API-Key": LLAMA_API_KEY,
-            },
-            json={"message": safe_prompt, "history": data.history},
-            timeout=30.0,
+            f"{COLAB_API_URL}/chat",
+            json={"message": safe_prompt},
+            headers={"ngrok-skip-browser-warning": "true"},
+            timeout=300.0,
         )
         response.raise_for_status()
         reply = response.json().get("reply", "I'm here to listen.")
     except httpx.HTTPError as e:
-        raise HTTPException(status_code=502, detail=f"Llama API error: {str(e)}")
+        raise HTTPException(status_code=502, detail=f"Model error: {str(e)}")
 
     return {"reply": reply}
