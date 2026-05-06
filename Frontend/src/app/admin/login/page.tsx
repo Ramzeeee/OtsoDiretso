@@ -173,34 +173,43 @@ export default function Home() {
             </p>
           )}
 
-          {/* BUTTON */}
-          <button
-            onClick={handleLogin}
-            className="flex h-12 w-64 mx-auto items-center justify-center rounded-full border border-black/[.90] px-5 transition-colors hover:border-transparent hover:bg-blue/[.04] text-[#112a50] mt-4"
-          >
-            Log In
-          </button>
+          {/* BUTTONS */}
+          <div className="flex flex-col items-center mt-4 gap-3 w-full">
 
-          <button
-            onClick={() => setShowForgot(true)}
-            className="text-sm text-blue-600 mt-2 hover:underline"
-          >
-            Forgot Password?
-          </button>
+            {/* LOG IN */}
+            <button
+              onClick={handleLogin}
+              className="flex h-12 w-64 items-center justify-center rounded-full border border-black/[.90] px-5 transition-colors hover:border-transparent hover:bg-blue/[.04] text-[#112a50]"
+            >
+              Log In
+            </button>
+
+            {/* DIVIDER */}
+            <div className="w-64 border-t border-black/[.90] my-2"></div>
+
+            {/* SECOND ROW */}
+            <div className="flex justify-center items-center gap-6">
+
+              <button
+                onClick={() => setShowForgot(true)}
+                className="text-sm text-blue-600 hover:underline"
+              >
+                Forgot Password?
+              </button>
+
+              {/* vertical line */}
+              <div className="h-4 w-px bg-gray-400"></div>
+
+              <button
+                onClick={() => router.push("/")}
+                className="text-sm text-black font-medium hover:underline"
+              >
+                Log in as Student
+              </button>
+            </div>
+          </div>
         </div>
-      </main>
-
-      {/* BACK BUTTON */}
-          <button
-            onClick={() => router.push("/")}
-            className="fixed bottom-4 right-4 w-12 h-12 rounded-full overflow-hidden border border-gray-400 shadow-md hover:scale-105 transition"
-          >
-            <img
-              src="/chatSwitch.png"
-              alt="Back"
-              className="w-full h-full object-cover"
-            />
-          </button> 
+        </main>
 
           {showForgot && (
             <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
