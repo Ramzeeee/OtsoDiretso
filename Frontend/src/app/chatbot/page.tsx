@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChatWindow from "@/components/ChatWindow";
 import { useRouter } from "next/navigation";
 
@@ -22,6 +22,17 @@ export default function ChatbotPage() {
   ]);
 
   const [input, setInput] = useState("");
+  const [guestToken, setGuestToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const authToken = localStorage.getItem("token");
+    if (!authToken) {
+      fetch("http://127.0.0.1:8000/api/guest", { method: "POST" })
+        .then((res) => res.json())
+        .then((data) => setGuestToken(data.session_token))
+        .catch(() => {});
+    }
+  }, []);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -36,17 +47,27 @@ export default function ChatbotPage() {
     setInput("");
 
     try {
-      const token = localStorage.getItem("token");
+      const authToken = localStorage.getItem("token");
+      const isGuest = !authToken;
 
-      const res = await fetch("http://127.0.0.1:8000/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ message: userMessage }),
-      });
+      const res = await fetch(
+        isGuest
+          ? "http://127.0.0.1:8000/api/guest/chat"
+          : "http://127.0.0.1:8000/api/chat",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            ...(isGuest ? {} : { Authorization: `Bearer ${authToken}` }),
+          },
+          body: JSON.stringify(
+            isGuest
+              ? { message: userMessage, guest_session_token: guestToken }
+              : { message: userMessage }
+          ),
+        }
+      );
 
       const data = await res.json();
 
