@@ -225,7 +225,7 @@ export default function Home() {
                   placeholder="Enter your email"
                   value={forgotEmail}
                   onChange={(e) => setForgotEmail(e.target.value)}
-                  className="w-full p-3 border rounded mb-3"
+                  className="w-full p-3 border rounded mb-3 text-black"
                 />
 
                 {forgotError && (
@@ -245,7 +245,7 @@ export default function Home() {
                       setForgotError("");
                       setForgotMessage("");
                     }}
-                    className="px-4 py-2 bg-gray-300 rounded"
+                    className="px-4 py-2 bg-redd-500 rounded text-black font-bold"
                   >
                     Cancel
                   </button>

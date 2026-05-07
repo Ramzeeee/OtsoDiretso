@@ -133,9 +133,9 @@ export default function Home() {
         </h1>
 
         <img
-          src="/tempAvatarIcon.png"
+          src="/capyBuddy.png"
           alt="Avatar"
-          className="w-24 h-24 rounded-full mb-6 self-center"
+          className="w-26 h-28 rounded-full mb-6 self-center"
         />
 
         <div className="flex flex-col items-center sm:items-start w-full gap-3">

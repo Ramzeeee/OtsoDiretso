@@ -238,7 +238,7 @@ export default function AdminDashboard() {
             <input
               type="text"
               placeholder="Search users..."
-              className="w-full pl-10 p-2 border rounded"
+              className="w-full pl-10 p-2 border rounded text-black"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -254,7 +254,7 @@ export default function AdminDashboard() {
             </button>
 
             {showFilter && (
-              <div className="absolute right-0 bg-white shadow rounded mt-2 w-40 z-20">
+              <div className="absolute right-0 bg-white shadow rounded mt-2 w-40 z-20 text-black">
                 {[
                   { value: "all", label: "All" },
                   { value: "client", label: "Client" },
@@ -292,7 +292,7 @@ export default function AdminDashboard() {
       {/* USERS */}
       <div className="bg-white/20 rounded p-4 min-h-[400px] relative z-0">
         {filteredUsers.length === 0 ? (
-          <div className="flex justify-center items-center h-[400px]">
+          <div className="flex justify-center items-center h-[400px] text-black">
             No accounts available yet.
           </div>
         ) : (
@@ -328,18 +328,20 @@ export default function AdminDashboard() {
           <div className="bg-white p-8 rounded-xl w-full max-w-lg relative">
             <button
               onClick={() => setSelectedUser(null)}
-              className="absolute top-2 right-3"
+              className="absolute top-2 right-3 text-black"
             >
               ✕
             </button>
 
-            <h2 className="text-xl font-bold mb-4">User Details</h2>
+            <h2 className="text-xl font-bold mb-4 text-black">User Details</h2>
 
-            <p><b>Name:</b> {selectedUser.first_name} {selectedUser.last_name}</p>
-            <p><b>Email:</b> {selectedUser.email}</p>
-            <p><b>School ID:</b> {selectedUser.school_id}</p>
-            <p><b>Role:</b> {selectedUser.role}</p>
-            <p><b>Password:</b> ••••••••</p>
+            <div className="text-black">
+              <p><b>Name:</b> {selectedUser.first_name} {selectedUser.last_name}</p>
+              <p><b>Email:</b> {selectedUser.email}</p>
+              <p><b>School ID:</b> {selectedUser.school_id}</p>
+              <p><b>Role:</b> {selectedUser.role}</p>
+              <p><b>Password:</b> ••••••••</p>
+            </div>
 
             {/* ACTION BUTTONS */}
             <div className="mt-6 flex gap-3">
@@ -419,7 +421,7 @@ export default function AdminDashboard() {
         <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
           <div className="bg-white p-12 rounded-xl w-full max-w-4xl">
 
-            <h2 className="text-2xl mb-6">Create Account</h2>
+            <h2 className="text-2xl mb-6 text-[#ffe38c] font-bold">Create Account</h2>
 
             {serverError && <p className="text-red-500">{serverError}</p>}
 
@@ -429,7 +431,7 @@ export default function AdminDashboard() {
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className={`w-full p-3 border rounded outline-none ${
+                className={`w-full p-3 border rounded outline-none text-gray-400 ${
                   hasSubmitted && errors.role ? "border-red-500" : "border-gray-300"
                 }`}
               >
@@ -468,7 +470,7 @@ export default function AdminDashboard() {
 
               </div>
             ))}
-              <div className="flex justify-between">
+              <div className="flex justify-between text-red-500">
                 <button
                   type="button"
                   onClick={() => {
