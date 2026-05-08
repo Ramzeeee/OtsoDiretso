@@ -30,12 +30,13 @@ def chat(data: Message):
 
     # Step 2 — Build safe prompt based on risk level
     safe_prompt = build_safe_prompt(data.message, risk_level)
+    system_prompt = safe_prompt.replace(f"\n\nStudent: {data.message}", "")
 
     # Step 3 — Send to Colab model and return reply
     try:
         response = httpx.post(
             f"{COLAB_API_URL}/chat",
-            json={"message": safe_prompt},
+            json={"system": system_prompt, "message": data.message},
             headers={"ngrok-skip-browser-warning": "true"},
             timeout=300.0,
         )
