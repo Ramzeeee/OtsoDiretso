@@ -88,7 +88,7 @@ export default function ChatbotPage() {
 
       {/* SIDEBAR */}
       <div
-        className={`bg-white shadow-lg transition-all duration-300 overflow-hidden
+        className={`bg-[#faf3dd] shadow-lg transition-all duration-300 overflow-hidden
         ${menuOpen ? "w-64" : "w-0"}`}
       >
         {menuOpen && (
